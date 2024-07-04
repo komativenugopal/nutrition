@@ -1,0 +1,122 @@
+/* styles/signup.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header .marquee {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+header nav {
+    margin-top: 10px;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px); /* Adjust for header height */
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.form-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.form-content h1 {
+    margin-bottom: 20px;
+}
+
+.form-content label {
+    display: block;
+    margin: 10px 0 5px;
+    text-align: left;
+}
+
+.form-content input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-content button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form-content button:hover {
+    background-color: #45a049;
+}
+
+.form-content p {
+    margin-top: 20px;
+}
+
+.form-content a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.form-content a:hover {
+    text-decoration: underline;
+}
+
+/* Optional: styles for image content (if used) */
+.image-content {
+    display: none; /* Hide by default, enable if needed */
+    margin-left: 20px;
+}
+
+.image-content img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+

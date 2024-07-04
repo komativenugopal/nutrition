@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Nutrition Awareness</title>
+    <link rel="stylesheet" href="/styles/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1 class="title">NutriAware: Your Nutrition Tracker</h1>
+        <nav>
+            <ul>
+                <li class="right"><a href="/">Home</a></li>
+                <li class="right"><a href="/login.html">Login</a></li>
+                <li class="right"><a href="/signup.html">Sign Up</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="dashboard-container">
+        <marquee>Welcome to the NUTRITION TRACKER, <%= username %>!</marquee>
+        <p>Login successful!
+        <img src="/images/login_success.jpg" alt="Login Icon">
+        </p>
+        <form id="foodSearchForm">
+            <label for="food">Enter Food Item:</label>
+            <input type="text" id="food" name="food" required>
+            <button type="submit">Search</button>
+        </form>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nutrient</th>
+                        <th>Calories</th>
+                        <th>Protein (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Fat (g)</th>
+                    </tr>
+                </thead>
+                <tbody id="nutritionData">
+                    <% if (nutrients.length > 0) { %>
+                        <% nutrients.forEach(function(nutrient) { %>
+                            <tr>
+                                <td><%= nutrient.name %></td>
+                                <td><%= nutrient.calories %></td>
+                                <td><%= nutrient.protein %></td>
+                                <td><%= nutrient.carbs %></td>
+                                <td><%= nutrient.fat %></td>
+                            </tr>
+                        <% }); %>
+                    <% } %>
+                </tbody>
+            </table>
+            <div class="nutrition-animation">
+                <img src="/images/nutrition.png" alt="Nutrition Animation">
+            </div>
+        </div>
+        <h3 class="<%= isFoodHealthy ? 'safe' : 'danger' %>">
+            <%= isFoodHealthy ? 'Healthy' : 'Unhealthy' %> 
+            <img src="/images/<%= isFoodHealthy ? 'safe' : 'danger' %>.png" alt="<%= isFoodHealthy ? 'Healthy' : 'Unhealthy' %> Icon">
+        </h3>
+    </div>
+    <footer>
+        <marquee><p>“Good nutrition is the foundation of a healthy life.”</p></marquee>
+        <p>&copy; 2024 Nutrition Awareness</p>
+    </footer>
+
+    <script>
+        document.getElementById('foodSearchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const food = document.getElementById('food').value;
+            fetchNutritionData(food);
+        });
+
+        function fetchNutritionData(food) {
+            fetch('/getNutrition?food=' + food)
+                .then(response => response.json())
+                .then(data => {
+                    const nutrients = data.nutrients;
+                    const isFoodHealthy = data.isFoodHealthy;
+                    const nutritionTable = document.getElementById('nutritionData');
+                    nutritionTable.innerHTML = '';
+                    nutrients.forEach(nutrient => {
+                        const row = document.createElement('tr');
+                        const nutrientNameCell = document.createElement('td');
+                        nutrientNameCell.textContent = nutrient.name;
+                        const nutrientCaloriesCell = document.createElement('td');
+                        nutrientCaloriesCell.textContent = nutrient.calories;
+                        const nutrientProteinCell = document.createElement('td');
+                        nutrientProteinCell.textContent = nutrient.protein;
+                        const nutrientCarbsCell = document.createElement('td');
+                        nutrientCarbsCell.textContent = nutrient.carbs;
+                        const nutrientFatCell = document.createElement('td');
+                        nutrientFatCell.textContent = nutrient.fat;
+                        row.appendChild(nutrientNameCell);
+                        row.appendChild(nutrientCaloriesCell);
+                        row.appendChild(nutrientProteinCell);
+                        row.appendChild(nutrientCarbsCell);
+                        row.appendChild(nutrientFatCell);
+                        nutritionTable.appendChild(row);
+                    });
+
+                    const healthStatusElement = document.querySelector('h3');
+                    healthStatusElement.textContent = isFoodHealthy ? 'Healthy' : 'Unhealthy';
+                    healthStatusElement.className = isFoodHealthy ? 'safe' : 'danger';
+                    healthStatusElement.innerHTML += `<img src="/images/${isFoodHealthy ? 'safe' : 'danger'}.png" alt="${isFoodHealthy ? 'Healthy' : 'Unhealthy'} Icon">`;
+                })
+                .catch(error => {
+                    console.error('Error fetching nutrition data:', error);
+                });
+        }
+    </script>
+</body>
+</html>
